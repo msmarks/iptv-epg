@@ -2,9 +2,9 @@ name: auto update
 
 on:
   push:
-    branches: [ main ]
+    branches: [ auto-update ]
   pull_request:
-    branches: [ main ]
+    branches: [ auto-update ]
   schedule:
   # auto update at 1,7,12,18 o'clock Beijing time
   # check at https://crontab.guru/
@@ -49,9 +49,7 @@ jobs:
           git add -A
           git diff-index --quiet HEAD || git commit -m "🚀 update(更新) $(date '+%Y-%m-%d %H:%M:%S')"
       - name: Pull changes
-        run: git pull -r
+        run: git pull origin auto-update  -r
       - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+        run: git push origin auto-update
           
